@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Cracker</title>
+</head>
+<body>
+    <h1>Password Cracker</h1>
+    <form id="crackForm">
+        <label for="password">Enter Password to Crack:</label>
+        <input type="text" id="password" name="password" required>
+        <button type="submit">Crack Password</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('crackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let found = false;
+
+            function crack(current) {
+                if (found) return;
+                if (current === password) {
+                    document.getElementById('result').innerText = `Password Cracked: ${current}`;
+                    found = true;
+                    return;
+                }
+                for (let i = 0; i < charset.length; i++) {
+                    crack(current + charset[i]);
+                }
+            }
+
+            crack("");
+        });
+    </script>
+</body>
+</html>
